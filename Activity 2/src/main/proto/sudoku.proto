@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.example.sudoku.protocol";
+option java_outer_classname = "SudokuProto";
+
+package sudoku;
+
+service SudokuService {
+  rpc Login (LoginRequest) returns (LoginResponse) {}
+  rpc StartGame (StartGameRequest) returns (GameBoard) {}
+  rpc MakeMove (MakeMoveRequest) returns (GameBoard) {}
+  rpc GetLeaderboard (LeaderboardRequest) returns (Leaderboard) {}
+  rpc Quit (QuitRequest) returns (QuitResponse) {}
+}
+
+message LoginRequest {
+  string username = 1;
+}
+
+message LoginResponse {
+  bool success = 1;
+  string message = 2;
+  MainMenu main_menu = 3;
+}
+
+message MainMenu {
+  repeated string options = 1;
+}
+
+message StartGameRequest {
+  int32 difficulty = 1;
+  string username = 2;
+}
+
+message GameBoard {
+  repeated int32 cells = 1;
+  bool game_over = 2;
+  int32 score = 3;
+}
+
+message MakeMoveRequest {
+  string username = 1;
+  int32 row = 2;
+  int32 col = 3;
+  int32 value = 4;
+}
+
+message LeaderboardRequest {}
+
+message Leaderboard {
+  repeated LeaderboardEntry entries = 1;
+}
+
+message LeaderboardEntry {
+  string username = 1;
+  int32 score = 2;
+  int32 login_count = 3;
+}
+
+message QuitRequest {}
+
+message QuitResponse {
+  string message = 1;
+}
+
