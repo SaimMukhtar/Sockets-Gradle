@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.example'
+version = '1.0-SNAPSHOT'
+
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Add any dependencies here, if required
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'SockClient' // or 'SockServer' for the server executable
+        )
+    }
+}
+
+task runClient(type: JavaExec) {
+    mainClass = 'SockClient'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runServer(type: JavaExec) {
+    mainClass = 'SockServer'
+    classpath = sourceSets.main.runtimeClasspath
+}
